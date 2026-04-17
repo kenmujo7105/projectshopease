@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  cache:
+    type: none
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: test@gmail.com
+    password: test-password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  access_key: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
+  refresh_key: "8u)=}s@pq9_o4&mv]1ezze&c}{!?]$hjt@xz&*((bc7{34&]n8@v?cunwetpwm?["
+
+ghn:
+  token: "test-ghn-token"
+  shop: "12345"
+  baseUrl: "https://online-gateway.ghn.vn/shiip/public-api"
+
+cloud:
+  link: "cloudinary://test:test@test"
+
+admin:
+  email: "admin@gmail.com"
+  password: "admin"
