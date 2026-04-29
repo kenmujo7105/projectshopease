@@ -12,7 +12,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class ShopApplication {
 
 	public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        String envDir = new java.io.File("../.env").exists() ? "../" : "./";
+        Dotenv dotenv = Dotenv.configure().directory(envDir).ignoreIfMissing().load();
 
         dotenv.entries().forEach(entry ->
                 System.setProperty(entry.getKey(), entry.getValue())

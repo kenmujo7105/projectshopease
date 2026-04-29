@@ -19,6 +19,7 @@ import com.EcommerceShop.Shop.service.ProductService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -85,6 +86,12 @@ public class ProductServiceImpl implements ProductService {
                 .map(productCategory -> productMapper.toProductResponse(productCategory.getProduct()))
                 .toList();
     }
+
+    public List<ProductResponse> getByBrand(Long brandId) {
+        return productRepository.findByBrandId(brandId).stream()
+                .map(productMapper::toProductResponse)
+                .toList();
+    }
     @PreAuthorize("hasRole('ADMIN')")
     public ProductResponse updateProductInfo(Long id, ProductRequest request){
         Product product = productRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND)) ;
@@ -131,5 +138,13 @@ public class ProductServiceImpl implements ProductService {
             return productRepository.findAll().stream().map(productMapper::toProductResponse).toList();
         }
         return productRepository.search(keyword.toLowerCase()).stream().map(productMapper::toProductResponse).toList();
+    }
+
+    public List<ProductResponse> suggest(String keyword){
+        if (keyword == null || keyword.isBlank()) {
+            return List.of();
+        }
+        return productRepository.suggest(keyword.toLowerCase(), PageRequest.of(0, 7))
+                .stream().map(productMapper::toProductResponse).toList();
     }
 }

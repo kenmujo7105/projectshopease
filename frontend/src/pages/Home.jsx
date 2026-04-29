@@ -98,8 +98,8 @@ export default function Home() {
               Xem tất cả <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-            {categories.slice(0, 8).map((cat) => (
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3">
+            {categories.map((cat) => (
               <Link
                 key={cat.id}
                 to={`/products?category=${cat.name}`}

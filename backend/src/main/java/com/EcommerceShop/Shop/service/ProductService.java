@@ -15,6 +15,8 @@ public interface ProductService {
 
     List<ProductResponse> getByCategory(String name) ;
 
+    List<ProductResponse> getByBrand(Long brandId) ;
+
     ProductResponse updateProductInfo(Long id, ProductRequest request);
 
     ProductResponse updateProductDetail(Long productId, UpdateProductDetailRequest request);
@@ -28,4 +30,6 @@ public interface ProductService {
     void deleteDetail(Long productId, Long detailId) ;
 
     List<ProductResponse> search(String keyword) ;
+
+    List<ProductResponse> suggest(String keyword) ;
 }

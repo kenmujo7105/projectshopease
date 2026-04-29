@@ -74,12 +74,35 @@ public class ProductController {
                 .message(String.format("Product detail %s has been deleted!", detailId)).build();
     }
 
+    @GetMapping("/by-category")
+    ApiResponseWrapper<List<ProductResponse>> getByCategory(
+            @RequestParam(name = "name") String name
+    ){
+        return ApiResponseWrapper.<List<ProductResponse>>builder()
+                .data(productService.getByCategory(name)).build();
+    }
+
+    @GetMapping("/by-brand")
+    ApiResponseWrapper<List<ProductResponse>> getByBrand(
+            @RequestParam(name = "brandId") Long brandId
+    ){
+        return ApiResponseWrapper.<List<ProductResponse>>builder()
+                .data(productService.getByBrand(brandId)).build();
+    }
+
     @GetMapping("/search")
     ApiResponseWrapper<List<ProductResponse>> search(
             @RequestParam(name = "keyword") String keyword
     ){
         return ApiResponseWrapper.<List<ProductResponse>>builder()
                 .data(productService.search(keyword)).build() ;
+    }
+    @GetMapping("/suggest")
+    ApiResponseWrapper<List<ProductResponse>> suggest(
+            @RequestParam(name = "keyword") String keyword
+    ){
+        return ApiResponseWrapper.<List<ProductResponse>>builder()
+                .data(productService.suggest(keyword)).build();
     }
 
 }

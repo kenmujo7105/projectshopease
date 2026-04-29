@@ -23,7 +23,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
     static String[] public_endpoint_post = {
-            "/auth/**"
+            "/auth/**",
+            "/chat/**"
     };
     static String[] public_endpoint_get = {
             "/product/**",

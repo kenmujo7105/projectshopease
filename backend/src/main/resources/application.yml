@@ -47,3 +47,14 @@ cloud:
 admin:
   email: ${ADMIN_EMAIL}
   password: ${ADMIN_PASSWORD}
+
+ai:
+  provider: groq  # Set to 'gemini' to use Gemini, 'groq' to use Groq
+  groq:
+    api-key: ${GROQ_API_KEY}
+    url: https://api.groq.com/openai/v1/chat/completions
+
+gemini:
+  api:
+    key: ${GEMINI_API_KEY:}
+

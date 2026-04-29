@@ -37,8 +37,8 @@ spring:
             enable: true
 
 jwt:
-  access_key: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
-  refresh_key: "8u)=}s@pq9_o4&mv]1ezze&c}{!?]$hjt@xz&*((bc7{34&]n8@v?cunwetpwm?["
+  access_key: "dummy_test_jwt_access_key_must_be_very_long_so_hs512_works_perfectly_fine_in_unit_tests"
+  refresh_key: "dummy_test_jwt_refresh_key_must_be_very_long_so_hs512_works_perfectly_fine_in_unit_tests"
 
 ghn:
   token: "test-ghn-token"
@@ -51,3 +51,11 @@ cloud:
 admin:
   email: "admin@gmail.com"
   password: "admin"
+
+gemini:
+  api:
+    key: dummy_gemini_key          
+
+groq:
+  api:
+    key: dummy_groq_key

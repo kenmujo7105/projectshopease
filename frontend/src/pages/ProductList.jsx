@@ -16,6 +16,8 @@ export default function ProductList() {
   const [page, setPage] = useState(0);
   const keyword = searchParams.get('keyword') || '';
   const selectedCategory = searchParams.get('category') || '';
+  const selectedBrand = searchParams.get('brand') || '';
+  const selectedBrandId = searchParams.get('brandId') || '';
 
   useEffect(() => {
     const fetchFilters = async () => {
@@ -35,14 +37,14 @@ export default function ProductList() {
         let res;
         if (keyword) {
           res = await productApi.search(keyword);
+        } else if (selectedBrandId) {
+          res = await productApi.getByBrand(selectedBrandId);
+        } else if (selectedCategory) {
+          res = await productApi.getByCategory(selectedCategory);
         } else {
           res = await productApi.getAll({ page, size: 20 });
         }
-        let data = res.data || [];
-        if (selectedCategory) {
-          data = data.filter(p => p.category?.includes(selectedCategory));
-        }
-        setProducts(data);
+        setProducts(res.data || []);
       } catch {
         setProducts([]);
       } finally {
@@ -50,7 +52,7 @@ export default function ProductList() {
       }
     };
     fetchProducts();
-  }, [keyword, page, selectedCategory]);
+  }, [keyword, page, selectedCategory, selectedBrandId]);
 
   const handleCategoryClick = (catName) => {
     const params = new URLSearchParams(searchParams);
@@ -58,11 +60,29 @@ export default function ProductList() {
       params.delete('category');
     } else {
       params.set('category', catName);
+      params.delete('brand');
+      params.delete('brandId');
     }
+    setPage(0);
+    setSearchParams(params);
+  };
+
+  const handleBrandClick = (brand) => {
+    const params = new URLSearchParams(searchParams);
+    if (brand.id === Number(selectedBrandId)) {
+      params.delete('brand');
+      params.delete('brandId');
+    } else {
+      params.set('brand', brand.name);
+      params.set('brandId', brand.id);
+      params.delete('category');
+    }
+    setPage(0);
     setSearchParams(params);
   };
 
   const clearFilters = () => {
+    setPage(0);
     setSearchParams({});
   };
 
@@ -72,9 +92,15 @@ export default function ProductList() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">
-            {keyword ? `Kết quả tìm kiếm: "${keyword}"` : 'Tất cả sản phẩm'}
+            {keyword
+              ? `Kết quả tìm kiếm: "${keyword}"`
+              : selectedBrand
+              ? `Thương hiệu: ${selectedBrand}`
+              : selectedCategory
+              ? `Danh mục: ${selectedCategory}`
+              : 'Tất cả sản phẩm'}
           </h1>
-          {(keyword || selectedCategory) && (
+          {(keyword || selectedCategory || selectedBrandId) && (
             <button onClick={clearFilters} className="text-sm text-primary-500 hover:underline flex items-center gap-1 mt-1">
               <X className="w-3.5 h-3.5" /> Xóa bộ lọc
             </button>
@@ -116,11 +142,19 @@ export default function ProductList() {
             {brands.length > 0 && (
               <div>
                 <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">Thương hiệu</h3>
-                <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
                   {brands.map((brand) => (
-                    <div key={brand.id} className="text-sm text-gray-600 px-3 py-1.5">
+                    <button
+                      key={brand.id}
+                      onClick={() => handleBrandClick(brand)}
+                      className={`block w-full text-left text-sm px-3 py-2 rounded-lg transition-colors ${
+                        brand.id === Number(selectedBrandId)
+                          ? 'bg-primary-50 text-primary-600 font-medium'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
                       {brand.name}
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>

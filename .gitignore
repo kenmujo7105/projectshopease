@@ -30,3 +30,24 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Security & Secrets ###
+.env
+.env.*
+!.env.example
+*.local
+application-local.yml
+application-local.properties
+application-dev.yml
+application-dev.properties
+
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+### Logs ###
+logs/
+*.log
