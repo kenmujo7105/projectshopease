@@ -15,6 +15,7 @@ ShopEase is a modern, robust, and intelligent e-commerce platform built with an 
 
 ## 🛠️ Tech Stack
 
+- **Frontend**: React, Vite, Tailwind CSS, Zustand, Axios
 - **Backend**: Java 21, Spring Boot 3, Spring Security, Spring Data JPA
 - **Authentication**: JWT (JSON Web Tokens)
 - **Database**: PostgreSQL / MySQL
