@@ -30,6 +30,7 @@ build/
 
 ### VS Code ###
 .vscode/
+*.code-workspace
 
 ### Security & Secrets ###
 .env
